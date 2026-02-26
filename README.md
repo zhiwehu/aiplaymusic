@@ -8,8 +8,8 @@
 
 ```bash
 # 1. 克隆或下载项目
-git clone https://github.com/yourname/ai-music-player.git
-cd ai-music-player
+git clone https://github.com/zhiwehu/aiplaymusic.git
+cd aiplaymusic
 
 # 2. 运行安装脚本
 python install.py
@@ -24,8 +24,8 @@ python install.py
 
 ```bash
 # 1. 克隆项目
-git clone https://github.com/yourname/ai-music-player.git
-cd ai-music-player
+git clone https://github.com/zhiwehu/aiplaymusic.git
+cd aiplaymusic
 
 # 2. 创建虚拟环境（推荐）
 python -m venv venv
