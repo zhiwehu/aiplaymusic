@@ -29,7 +29,9 @@ else:
 
 # 音乐文件存放目录
 # 可通过环境变量 MUSIC_DIR 自定义，默认为项目根目录下的 music 文件夹
-MUSIC_DIR = Path(os.getenv("MUSIC_DIR", BASE_DIR / "music"))
+# 支持绝对路径和相对路径（相对于 BASE_DIR）
+_music_path = os.getenv("MUSIC_DIR", "music")
+MUSIC_DIR = Path(_music_path) if Path(_music_path).is_absolute() else BASE_DIR / _music_path
 
 # SQLite 数据库文件路径
 # 可通过环境变量 DATABASE_PATH 自定义，默认为项目根目录下的 music.db
