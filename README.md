@@ -4,14 +4,17 @@
 
 ## 快速开始
 
-### 方式一：使用 uvx（推荐）
+### 方式一：使用 pip install（推荐）
 
 ```bash
 # 安装 uv（如果没有）
 pip install uv
 
-# 直接运行测试
-uvx --from github.com/zhiwehu/aiplaymusic ai-music-player
+# 直接从 GitHub 安装并运行
+uvx --from "git+https://github.com/zhiwehu/aiplaymusic" ai-music-player
+
+# 或使用 @main 指定分支
+uvx --from "git+https://github.com/zhiwehu/aiplaymusic@main" ai-music-player
 ```
 
 ### 方式二：克隆项目后运行安装脚本
@@ -54,7 +57,11 @@ pip install -e .
     "ai-music-player": {
       "type": "command",
       "command": "uvx",
-      "args": ["--from", "github.com/zhiwehu/aiplaymusic", "ai-music-player"],
+      "args": [
+        "--from",
+        "git+https://github.com/zhiwehu/aiplaymusic",
+        "ai-music-player"
+      ],
       "env": {
         "MUSIC_DIR": "/path/to/your/music",
         "DATABASE_PATH": "music.db",
@@ -93,7 +100,7 @@ pip install -e .
   "mcpServers": {
     "ai-music-player": {
       "command": "uvx",
-      "args": ["--from", "github.com/zhiwehu/aiplaymusic", "ai-music-player"],
+      "args": ["--from", "git+https://github.com/zhiwehu/aiplaymusic", "ai-music-player"],
       "env": {
         "MUSIC_DIR": "/path/to/your/music"
       }

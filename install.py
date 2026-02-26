@@ -134,7 +134,11 @@ def generate_mcp_config(python_path: str, script_path: str, env_config: dict, us
             "mcpServers": {
                 "ai-music-player": {
                     "command": "uvx",
-                    "args": ["--from", "github.com/zhiwehu/aiplaymusic", "ai-music-player"],
+                    "args": [
+                        "--from",
+                        "git+https://github.com/zhiwehu/aiplaymusic",
+                        "ai-music-player"
+                    ],
                     "env": env_config
                 }
             }
