@@ -1,0 +1,20 @@
+# AI Music Player - Dependencies
+# Compatible with Ubuntu 22.04, macOS, and other platforms
+
+# Audio metadata extraction
+mutagen==1.47.0
+
+# Audio playback (use pre-built wheel for better compatibility)
+pygame==2.6.1
+
+# Database ORM (2.0.47 supports Python 3.13)
+sqlalchemy==2.0.47
+
+# OpenAI client (compatible with Ollama)
+openai==1.12.0
+
+# Environment variables
+python-dotenv>=1.0.1
+
+# MCP Server framework (latest version)
+fastmcp==3.0.2

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "ai-music-player": {
+      "command": "/Users/huzhiwei/ai/aiplaymusic/.venv/bin/python",
+      "args": [
+        "/Users/huzhiwei/ai/aiplaymusic/mcp_server.py"
+      ],
+      "env": {
+        "DISPLAY": ":0"
+      }
+    }
+  }
+}
