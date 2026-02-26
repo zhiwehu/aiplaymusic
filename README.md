@@ -42,9 +42,29 @@ pip install -e .
 
 ## 配置说明
 
-### 环境变量
+### 方式一：在 MCP 客户端中配置（推荐）
 
-可以在 `.env` 文件中配置以下选项：
+在 Cherry Studio 或 Claude Desktop 的 MCP 配置中添加 `env` 字段：
+
+```json
+{
+  "mcpServers": {
+    "ai-music-player": {
+      "command": "python",
+      "args": ["/path/to/mcp_server.py"],
+      "env": {
+        "MUSIC_DIR": "/path/to/your/music",
+        "DATABASE_PATH": "music.db",
+        "DEFAULT_VOLUME": "0.7"
+      }
+    }
+  }
+}
+```
+
+### 方式二：使用 .env 文件
+
+在项目目录创建 `.env` 文件：
 
 ```bash
 # 音乐文件目录（可选，默认为 ./music）

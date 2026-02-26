@@ -1,12 +1,14 @@
 {
   "mcpServers": {
     "ai-music-player": {
-      "command": "/Users/huzhiwei/ai/aiplaymusic/.venv/bin/python",
+      "command": "python",
       "args": [
-        "/Users/huzhiwei/ai/aiplaymusic/mcp_server.py"
+        "/path/to/aiplaymusic/mcp_server.py"
       ],
       "env": {
-        "DISPLAY": ":0"
+        "MUSIC_DIR": "/path/to/your/music",
+        "DATABASE_PATH": "music.db",
+        "DEFAULT_VOLUME": "0.7"
       }
     }
   }
