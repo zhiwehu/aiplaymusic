@@ -127,37 +127,40 @@ def get_env_config():
 
 
 def generate_mcp_config(python_path: str, script_path: str, env_config: dict, use_uvx: bool = False) -> dict:
-    """生成 MCP 配置"""
+    """生成 MCP 配置 (Cherry Studio 格式)"""
     if use_uvx:
         # 使用 uvx 方式
-        config = {
-            "mcpServers": {
-                "ai-music-player": {
-                    "command": "uvx",
-                    "args": [
-                        "--from",
-                        "git+https://github.com/zhiwehu/aiplaymusic",
-                        "ai-music-player"
-                    ],
-                    "env": env_config
-                }
-            }
+        server_config = {
+            "type": "command",
+            "command": "uvx",
+            "args": [
+                "--from",
+                "git+https://github.com/zhiwehu/aiplaymusic",
+                "ai-music-player"
+            ],
+            "env": env_config,
+            "enabled": True
         }
     else:
         # 使用 Python 脚本方式
-        config = {
-            "mcpServers": {
-                "ai-music-player": {
-                    "command": python_path,
-                    "args": [script_path],
-                    "env": env_config
-                }
-            }
+        server_config = {
+            "type": "command",
+            "command": python_path,
+            "args": [script_path],
+            "env": env_config,
+            "enabled": True
         }
 
     # 如果 env 为空，移除 env 字段
-    if not config["mcpServers"]["ai-music-player"]["env"]:
-        del config["mcpServers"]["ai-music-player"]["env"]
+    if not server_config["env"]:
+        del server_config["env"]
+
+    # Cherry Studio 格式
+    config = {
+        "servers": {
+            "ai-music-player": server_config
+        }
+    }
 
     return config
 
