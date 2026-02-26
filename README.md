@@ -27,21 +27,6 @@ python install.py
 
 安装脚本会生成 MCP 配置，复制到 Cherry Studio 即可使用。
 
-安装脚本会询问选择 uvx 或本地 Python 方式运行，并生成 MCP 配置供复制。
-
-### 方式三：手动安装
-
-```bash
-# 1. 克隆项目
-git clone https://github.com/zhiwehu/aiplaymusic.git
-cd aiplaymusic
-
-# 2. 创建虚拟环境并安装
-python -m venv venv
-source venv/bin/activate
-pip install -e .
-```
-
 ## MCP 客户端配置
 
 ### Cherry Studio
