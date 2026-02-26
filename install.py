@@ -161,7 +161,10 @@ def configure_claude_desktop(python_path: str, script_path: str, env_config: dic
     with open(config_file, "w") as f:
         json.dump(config, f, indent=2)
 
-    print_success(f"Claude Desktop 配置已更新: {config_file}")
+    print_success(f"Claude Desktop 配置已更新")
+    print(f"  配置文件: \"{config_file}\"")
+    print(f"  Python: \"{python_path}\"")
+    print(f"  脚本: \"{script_path}\"")
 
 
 def configure_cherry_studio(python_path: str, script_path: str, env_config: dict = None):
@@ -211,7 +214,10 @@ def configure_cherry_studio(python_path: str, script_path: str, env_config: dict
     with open(config_file, "w") as f:
         json.dump(config, f, indent=2)
 
-    print_success(f"Cherry Studio 配置已更新: {config_file}")
+    print_success(f"Cherry Studio 配置已更新")
+    print(f"  配置文件: \"{config_file}\"")
+    print(f"  Python: \"{python_path}\"")
+    print(f"  脚本: \"{script_path}\"")
 
 
 def generate_mcp_json(python_path: str, script_path: str, env_config: dict = None):
