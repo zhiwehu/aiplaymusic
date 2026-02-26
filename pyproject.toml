@@ -23,7 +23,7 @@ dev = ["pytest>=7.0.0"]
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["ai_music_player", "database*", "scanner*", "player*"]
+include = ["ai_music_player*", "ai_music_player.database*", "ai_music_player.player*", "ai_music_player.scanner*"]
 exclude = ["tests*", "music*", ".venv*", "*.egg*"]
 
 [tool.uvx]
