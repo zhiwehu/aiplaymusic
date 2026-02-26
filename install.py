@@ -131,7 +131,6 @@ def generate_mcp_config(python_path: str, script_path: str, env_config: dict, us
     if use_uvx:
         # 使用 uvx 方式
         server_config = {
-            "type": "command",
             "command": "uvx",
             "args": [
                 "--from",
@@ -144,7 +143,6 @@ def generate_mcp_config(python_path: str, script_path: str, env_config: dict, us
     else:
         # 使用 Python 脚本方式
         server_config = {
-            "type": "command",
             "command": python_path,
             "args": [script_path],
             "env": env_config,
