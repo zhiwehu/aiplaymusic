@@ -4,20 +4,17 @@
 
 ## 快速开始
 
-### 方式一：使用 pip install（推荐）
+### 方式一：测试运行
 
 ```bash
 # 安装 uv（如果没有）
 pip install uv
 
-# 直接从 GitHub 安装并运行
+# 直接运行测试（仅用于测试 MCP 是否正常工作）
 uvx --from "git+https://github.com/zhiwehu/aiplaymusic" ai-music-player
-
-# 或使用 @main 指定分支
-uvx --from "git+https://github.com/zhiwehu/aiplaymusic@main" ai-music-player
 ```
 
-### 方式二：克隆项目后运行（推荐）
+### 方式二：配置到 Cherry Studio（推荐）
 
 ```bash
 # 1. 克隆项目
@@ -27,6 +24,8 @@ cd aiplaymusic
 # 2. 运行安装脚本
 python install.py
 ```
+
+安装脚本会生成 MCP 配置，复制到 Cherry Studio 即可使用。
 
 安装脚本会询问选择 uvx 或本地 Python 方式运行，并生成 MCP 配置供复制。
 
