@@ -4,10 +4,17 @@
 
 ## 快速开始
 
-### 方式一：使用安装脚本（推荐）
+### 方式一：使用 uvx（推荐，无需安装）
 
 ```bash
-# 1. 克隆或下载项目
+# 直接运行，无需安装任何依赖
+uvx --from github.com/zhiwehu/aiplaymusic mcp_server
+```
+
+### 方式二：克隆项目后运行
+
+```bash
+# 1. 克隆项目
 git clone https://github.com/zhiwehu/aiplaymusic.git
 cd aiplaymusic
 
@@ -17,10 +24,10 @@ python install.py
 
 安装脚本会自动：
 - 检查并安装依赖
-- 配置 MCP 客户端（Claude Desktop / Cherry Studio）
-- 生成配置文件
+- 生成 MCP 配置文件
+- 显示配置内容供复制
 
-### 方式二：手动安装
+### 方式三：手动安装
 
 ```bash
 # 1. 克隆项目
@@ -42,27 +49,7 @@ pip install -e .
 
 ## 配置说明
 
-### 方式一：在 MCP 客户端中配置（推荐）
-
-在 Cherry Studio 或 Claude Desktop 的 MCP 配置中添加 `env` 字段：
-
-```json
-{
-  "mcpServers": {
-    "ai-music-player": {
-      "command": "python",
-      "args": ["/path/to/mcp_server.py"],
-      "env": {
-        "MUSIC_DIR": "/path/to/your/music",
-        "DATABASE_PATH": "music.db",
-        "DEFAULT_VOLUME": "0.7"
-      }
-    }
-  }
-}
-```
-
-### 方式二：使用 .env 文件
+### 环境变量
 
 在项目目录创建 `.env` 文件：
 
@@ -79,28 +66,29 @@ DEFAULT_VOLUME=0.7
 
 ### MCP 客户端配置
 
-#### Claude Desktop
+#### 使用 uvx（最简单）
 
-在 `~/Library/Application Support/Claude/claude_desktop_config.json` 中添加：
+```bash
+# 安装 uv（如果没有）
+pip install uv
 
-```json
-{
-  "mcpServers": {
-    "ai-music-player": {
-      "command": "/path/to/venv/bin/python",
-      "args": ["/path/to/mcp_server.py"]
-    }
-  }
-}
+# 运行 MCP 服务器
+uvx --from github.com/zhiwehu/aiplaymusic mcp_server
+
+# 或指定版本
+uvx --from github.com/zhiwehu/aiplaymusic@main mcp_server
 ```
 
 #### Cherry Studio
 
 在设置 → MCP 服务器中添加：
-- 名称: AI Music Player
 - 类型: Command
-- 命令: `/path/to/venv/bin/python`
-- 参数: `/path/to/mcp_server.py`
+- 命令: `uvx`
+- 参数: `--from github.com/zhiwehu/aiplaymusic mcp_server`
+- 环境变量（可选）:
+  - `MUSIC_DIR`: 音乐目录
+  - `DATABASE_PATH`: 数据库路径
+  - `DEFAULT_VOLUME`: 默认音量
 
 ## 使用方法
 

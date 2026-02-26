@@ -15,9 +15,21 @@ dependencies = [
     "python-dotenv>=1.0.0",
 ]
 
+[project.scripts]
+ai-music-player = "mcp_server:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0.0"]
+
 [tool.setuptools.packages.find]
 include = ["mcp_server", "database*", "scanner*", "player*"]
 exclude = ["tests*", "music*", ".venv*", "*.egg*"]
 
-[project.scripts]
-ai-music-player = "mcp_server:main"
+[tool.uvx]
+dependencies = [
+    "fastmcp>=2.0.0",
+    "pygame>=2.0.0",
+    "mutagen>=1.47.0",
+    "sqlalchemy>=2.0.0",
+    "python-dotenv>=1.0.0",
+]
