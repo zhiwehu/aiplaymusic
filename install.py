@@ -126,20 +126,33 @@ def get_env_config():
     return env_config
 
 
-def generate_mcp_config(python_path: str, script_path: str, env_config: dict) -> dict:
+def generate_mcp_config(python_path: str, script_path: str, env_config: dict, use_uvx: bool = False) -> dict:
     """生成 MCP 配置"""
-    config = {
-        "mcpServers": {
-            "ai-music-player": {
-                "command": python_path,
-                "args": [script_path],
-                "env": env_config
+    if use_uvx:
+        # 使用 uvx 方式
+        config = {
+            "mcpServers": {
+                "ai-music-player": {
+                    "command": "uvx",
+                    "args": ["--from", "github.com/zhiwehu/aiplaymusic", "ai-music-player"],
+                    "env": env_config
+                }
             }
         }
-    }
+    else:
+        # 使用 Python 脚本方式
+        config = {
+            "mcpServers": {
+                "ai-music-player": {
+                    "command": python_path,
+                    "args": [script_path],
+                    "env": env_config
+                }
+            }
+        }
 
     # 如果 env 为空，移除 env 字段
-    if not env_config:
+    if not config["mcpServers"]["ai-music-player"]["env"]:
         del config["mcpServers"]["ai-music-player"]["env"]
 
     return config
@@ -221,8 +234,26 @@ def main():
     if env_config:
         print_info(f"已加载 {len(env_config)} 个配置项")
 
+    # 询问是否使用 uvx
+    print("\n" + "-" * 40)
+    print("请选择 MCP 运行方式:")
+    print("-" * 40)
+    print("  1. uvx (推荐，无需安装依赖)")
+    print("  2. python (本地运行，需安装依赖)")
+    print("-" * 40)
+
+    choice = input("\n请输入选项 (1-2): ").strip()
+    use_uvx = choice == "1"
+
+    if use_uvx:
+        print_info("将使用 uvx 方式运行")
+        # uvx 不需要本地 Python 路径
+        python_path = "uvx"
+    else:
+        print_info("将使用 python 方式运行")
+
     # 生成配置
-    config = generate_mcp_config(python_path, script_path, env_config)
+    config = generate_mcp_config(python_path, script_path, env_config, use_uvx)
 
     # 保存到文件
     config_file = script_dir / "mcp_config.json"
@@ -248,18 +279,27 @@ def main():
     print("3. 添加 MCP 服务器，粘贴配置")
     print("-" * 60)
 
-    print("\nCherry Studio:")
-    print("  设置 → MCP 服务器 → 添加 → 粘贴 JSON")
+    if use_uvx:
+        print("\n安装 uvx (如果还没有):")
+        print("  pip install uv")
+        print("\nCherry Studio:")
+        print("  设置 → MCP 服务器 → 添加 → 粘贴 JSON")
+    else:
+        print("\nCherry Studio:")
+        print("  设置 → MCP 服务器 → 添加 → 粘贴 JSON")
 
-    print("\nClaude Desktop:")
-    print("  打开 ~/.config/Claude/claude_desktop_config.json")
-    print("  在 mcpServers 中添加配置")
+        print("\nClaude Desktop:")
+        print("  打开 ~/.config/Claude/claude_desktop_config.json")
+        print("  在 mcpServers 中添加配置")
 
     print("\n" + "=" * 60)
     print("配置参数说明:")
     print("=" * 60)
-    print(f"  Python: \"{python_path}\"")
-    print(f"  脚本: \"{script_path}\"")
+    if use_uvx:
+        print("  运行方式: uvx (从 GitHub 自动下载运行)")
+    else:
+        print(f"  Python: \"{python_path}\"")
+        print(f"  脚本: \"{script_path}\"")
     if env_config:
         for k, v in env_config.items():
             print(f"  {k}: \"{v}\"")
