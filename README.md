@@ -81,7 +81,7 @@ pip install -e .
     "ai-music-player": {
       "type": "command",
       "command": "/path/to/venv/bin/python",
-      "args": ["/path/to/mcp_server.py"],
+      "args": ["/path/to/ai_music_player/__main__.py"],
       "env": {
         "MUSIC_DIR": "/path/to/your/music",
         "DATABASE_PATH": "music.db",

@@ -16,13 +16,14 @@ dependencies = [
 ]
 
 [project.scripts]
-ai-music-player = "mcp_server:main"
+ai-music-player = "ai_music_player.__main__:main"
 
 [project.optional-dependencies]
 dev = ["pytest>=7.0.0"]
 
 [tool.setuptools.packages.find]
-include = ["mcp_server", "database*", "scanner*", "player*"]
+where = ["."]
+include = ["ai_music_player", "database*", "scanner*", "player*"]
 exclude = ["tests*", "music*", ".venv*", "*.egg*"]
 
 [tool.uvx]

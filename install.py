@@ -169,7 +169,7 @@ def main():
 
     # 项目路径
     script_dir = Path(__file__).parent.absolute()
-    script_path = str(script_dir / "mcp_server.py")
+    script_path = str(script_dir / "ai_music_player" / "__main__.py")
     venv_python = get_venv_python()
 
     print(f"\n项目目录: {script_dir}")
