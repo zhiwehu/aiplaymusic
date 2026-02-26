@@ -48,7 +48,9 @@ python install.py
         "ai-music-player"
       ],
       "env": {
-        "MUSIC_DIR": "/path/to/your/music"
+        "MUSIC_DIR": "/path/to/your/music",
+        "DATABASE_PATH": "music.db",
+        "DEFAULT_VOLUME": "0.7"
       }
     }
   }
