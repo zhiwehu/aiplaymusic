@@ -53,7 +53,7 @@ pip install -e .
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "ai-music-player": {
       "type": "command",
       "command": "uvx",
@@ -77,7 +77,7 @@ pip install -e .
 
 ```json
 {
-  "servers": {
+  "mcpServers": {
     "ai-music-player": {
       "type": "command",
       "command": "/path/to/venv/bin/python",

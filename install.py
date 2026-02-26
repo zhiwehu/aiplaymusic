@@ -155,9 +155,9 @@ def generate_mcp_config(python_path: str, script_path: str, env_config: dict, us
     if not server_config["env"]:
         del server_config["env"]
 
-    # Cherry Studio 格式
+    # Cherry Studio 格式 - 尝试 mcpServers
     config = {
-        "servers": {
+        "mcpServers": {
             "ai-music-player": server_config
         }
     }
