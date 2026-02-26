@@ -55,7 +55,6 @@ pip install -e .
 {
   "mcpServers": {
     "ai-music-player": {
-      "type": "command",
       "command": "uvx",
       "args": [
         "--from",
@@ -79,7 +78,6 @@ pip install -e .
 {
   "mcpServers": {
     "ai-music-player": {
-      "type": "command",
       "command": "/path/to/venv/bin/python",
       "args": ["/path/to/ai_music_player/__main__.py"],
       "env": {
