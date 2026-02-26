@@ -17,7 +17,7 @@ uvx --from "git+https://github.com/zhiwehu/aiplaymusic" ai-music-player
 uvx --from "git+https://github.com/zhiwehu/aiplaymusic@main" ai-music-player
 ```
 
-### 方式二：克隆项目后运行安装脚本
+### 方式二：克隆项目后运行（推荐）
 
 ```bash
 # 1. 克隆项目
@@ -28,7 +28,7 @@ cd aiplaymusic
 python install.py
 ```
 
-安装脚本会询问选择 uvx 或 python 方式运行，然后生成配置供复制。
+安装脚本会询问选择 uvx 或本地 Python 方式运行，并生成 MCP 配置供复制。
 
 ### 方式三：手动安装
 
@@ -37,19 +37,19 @@ python install.py
 git clone https://github.com/zhiwehu/aiplaymusic.git
 cd aiplaymusic
 
-# 2. 创建虚拟环境
+# 2. 创建虚拟环境并安装
 python -m venv venv
 source venv/bin/activate
-
-# 3. 安装
 pip install -e .
 ```
 
 ## MCP 客户端配置
 
-### Cherry Studio 配置示例
+### Cherry Studio
 
-#### 方式一：使用 uvx（推荐）
+运行 `python install.py` 后会生成配置，复制即可。手动配置如下：
+
+#### 使用 uvx（推荐）
 
 ```json
 {
@@ -64,16 +64,14 @@ pip install -e .
         "ai-music-player"
       ],
       "env": {
-        "MUSIC_DIR": "/path/to/your/music",
-        "DATABASE_PATH": "music.db",
-        "DEFAULT_VOLUME": "0.7"
+        "MUSIC_DIR": "/path/to/your/music"
       }
     }
   }
 }
 ```
 
-#### 方式二：使用本地 Python
+#### 使用本地 Python
 
 ```json
 {
