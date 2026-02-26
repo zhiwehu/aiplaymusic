@@ -2,14 +2,20 @@
 """
 数据库操作单元测试
 
-测试 database/db.py 中的数据库操作函数
+测试 ai_music_player/database/db.py 中的数据库操作函数
 使用项目的实际数据库进行测试
 """
 
 import os
+import sys
 import pytest
 
-from database.models import Music
+# 添加项目根目录和 ai_music_player 目录到路径
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+sys.path.insert(0, os.path.join(project_root, 'ai_music_player'))
+
+from ai_music_player.database.models import Music
 
 
 # 使用项目的实际数据库

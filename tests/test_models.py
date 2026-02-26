@@ -2,17 +2,23 @@
 """
 数据库模型单元测试
 
-测试 database/models.py 中的模型定义
+测试 ai_music_player/database/models.py 中的模型定义
 """
 
 import os
+import sys
 import tempfile
 
 import pytest
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
-from database.models import Base, Music, PlayHistory, UserPreference
+# 添加项目根目录和 ai_music_player 目录到路径
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.insert(0, project_root)
+sys.path.insert(0, os.path.join(project_root, 'ai_music_player'))
+
+from ai_music_player.database.models import Base, Music, PlayHistory, UserPreference
 
 
 class TestMusicModel:
