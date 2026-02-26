@@ -245,20 +245,29 @@ def generate_mcp_json(python_path: str, script_path: str, env_config: dict = Non
 
 def get_env_config():
     """获取环境变量配置"""
-    # 从 .env 文件读取
-    env_file = Path(__file__).parent / ".env"
+    script_dir = Path(__file__).parent.absolute()
+
+    # 优先读取 .env，其次 .env.example
+    env_file = script_dir / ".env"
+    if not env_file.exists():
+        env_file = script_dir / ".env.example"
+
     env_config = {}
 
     if env_file.exists():
+        print_info(f"从 {env_file.name} 读取配置...")
         try:
             with open(env_file) as f:
                 for line in f:
                     line = line.strip()
                     if line and not line.startswith("#") and "=" in line:
                         key, value = line.split("=", 1)
-                        env_config[key.strip()] = value.strip()
-        except:
-            pass
+                        key = key.strip()
+                        value = value.strip()
+                        if key:  # 确保 key 不为空
+                            env_config[key] = value
+        except Exception as e:
+            print_warning(f"读取配置文件失败: {e}")
 
     return env_config
 
