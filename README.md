@@ -90,28 +90,6 @@ pip install -e .
 }
 ```
 
-### Claude Desktop 配置
-
-```json
-{
-  "mcpServers": {
-    "ai-music-player": {
-      "command": "uvx",
-      "args": [
-        "--from",
-        "git+https://github.com/zhiwehu/aiplaymusic",
-        "--python",
-        "python3",
-        "ai-music-player"
-      ],
-      "env": {
-        "MUSIC_DIR": "/path/to/your/music"
-      }
-    }
-  }
-}
-```
-
 ## 环境变量说明
 
 | 变量 | 说明 | 默认值 |
