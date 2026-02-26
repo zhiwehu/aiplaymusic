@@ -4,6 +4,9 @@ AI Music Player MCP 安装脚本
 
 自动配置 MCP 服务器，方便用户在各种 MCP 客户端中使用。
 
+使用方法:
+    python install.py
+
 支持的客户端:
 - Claude Desktop
 - Cherry Studio
@@ -13,8 +16,6 @@ AI Music Player MCP 安装脚本
 import os
 import sys
 import json
-import shutil
-import platform
 import subprocess
 from pathlib import Path
 
@@ -84,163 +85,14 @@ def install_dependencies(venv_python: Path):
     """在虚拟环境中安装依赖"""
     print_info("正在安装依赖...")
 
-    # 安装依赖
-    packages = [
-        "fastmcp>=2.0.0",
-        "pygame>=2.0.0",
-        "mutagen>=1.47.0",
-        "sqlalchemy>=2.0.0",
-        "python-dotenv>=1.0.0",
-    ]
-
     try:
         subprocess.run([str(venv_python), "-m", "pip", "install", "-e", "."],
                        check=True, capture_output=True)
         print_success("依赖安装成功!")
         return True
     except subprocess.CalledProcessError as e:
-        print_error(f"依赖安装失败: {e.stderr.decode() if e.stderr else e}")
+        print_error(f"依赖安装失败")
         return False
-
-
-def get_venv_mcp_config(venv_python: Path, script_path: str) -> dict:
-    """生成使用虚拟环境的 MCP 配置"""
-    # 从虚拟环境获取项目路径
-    project_dir = str(venv_python.parent)
-
-    return {
-        "mcpServers": {
-            "ai-music-player": {
-                "command": str(venv_python),
-                "args": [script_path],
-                "env": {}
-            }
-        }
-    }
-
-
-def configure_claude_desktop(python_path: str, script_path: str, env_config: dict = None):
-    """配置 Claude Desktop"""
-    config_dir = Path.home() / "Library" / "Application Support" / "Claude"
-
-    if platform.system() == "Linux":
-        config_dir = Path.home() / ".config" / "Claude"
-    elif platform.system() == "Windows":
-        config_dir = Path.home() / "AppData" / "Roaming" / "Claude"
-
-    config_file = config_dir / "claude_desktop_config.json"
-
-    # 读取现有配置
-    config = {}
-    if config_file.exists():
-        try:
-            with open(config_file) as f:
-                config = json.load(f)
-        except:
-            pass
-
-    # 添加或更新 MCP 服务器配置
-    if "mcpServers" not in config:
-        config["mcpServers"] = {}
-
-    server_config = {
-        "command": python_path,
-        "args": [script_path]
-    }
-
-    # 添加环境变量
-    if env_config:
-        server_config["env"] = env_config
-
-    config["mcpServers"]["ai-music-player"] = server_config
-
-    # 确保目录存在
-    config_dir.mkdir(parents=True, exist_ok=True)
-
-    # 写入配置
-    with open(config_file, "w") as f:
-        json.dump(config, f, indent=2)
-
-    print_success(f"Claude Desktop 配置已更新")
-    print(f"  配置文件: \"{config_file}\"")
-    print(f"  Python: \"{python_path}\"")
-    print(f"  脚本: \"{script_path}\"")
-
-
-def configure_cherry_studio(python_path: str, script_path: str, env_config: dict = None):
-    """配置 Cherry Studio"""
-    if platform.system() == "Darwin":
-        config_dir = Path.home() / "Library" / "Application Support" / "cherry-studio"
-    elif platform.system() == "Linux":
-        config_dir = Path.home() / ".config" / "cherry-studio"
-    elif platform.system() == "Windows":
-        config_dir = Path.home() / "AppData" / "Roaming" / "cherry-studio"
-    else:
-        print_warning(f"不支持的平台: {platform.system()}")
-        return
-
-    config_file = config_dir / "mcp-settings.json"
-
-    # 读取现有配置
-    config = {}
-    if config_file.exists():
-        try:
-            with open(config_file) as f:
-                config = json.load(f)
-        except:
-            pass
-
-    # 添加或更新 MCP 服务器配置
-    if "servers" not in config:
-        config["servers"] = {}
-
-    server_config = {
-        "type": "command",
-        "command": python_path,
-        "args": [script_path],
-        "enabled": True
-    }
-
-    # 添加环境变量
-    if env_config:
-        server_config["env"] = env_config
-
-    config["servers"]["ai-music-player"] = server_config
-
-    # 确保目录存在
-    config_dir.mkdir(parents=True, exist_ok=True)
-
-    # 写入配置
-    with open(config_file, "w") as f:
-        json.dump(config, f, indent=2)
-
-    print_success(f"Cherry Studio 配置已更新")
-    print(f"  配置文件: \"{config_file}\"")
-    print(f"  Python: \"{python_path}\"")
-    print(f"  脚本: \"{script_path}\"")
-
-
-def generate_mcp_json(python_path: str, script_path: str, env_config: dict = None):
-    """生成 mcp_config.json 文件"""
-    config = {
-        "mcpServers": {
-            "ai-music-player": {
-                "command": python_path,
-                "args": [script_path]
-            }
-        }
-    }
-
-    # 添加环境变量
-    if env_config:
-        config["mcpServers"]["ai-music-player"]["env"] = env_config
-
-    with open("mcp_config.json", "w") as f:
-        json.dump(config, f, indent=2)
-
-    print_success("已生成 mcp_config.json")
-    print(f"\n配置内容:")
-    print(json.dumps(config, indent=2, ensure_ascii=False))
 
 
 def get_env_config():
@@ -264,12 +116,33 @@ def get_env_config():
                         key, value = line.split("=", 1)
                         key = key.strip()
                         value = value.strip()
-                        if key:  # 确保 key 不为空
+                        if key:
                             env_config[key] = value
         except Exception as e:
             print_warning(f"读取配置文件失败: {e}")
+    else:
+        print_warning("未找到配置文件，使用默认配置")
 
     return env_config
+
+
+def generate_mcp_config(python_path: str, script_path: str, env_config: dict) -> dict:
+    """生成 MCP 配置"""
+    config = {
+        "mcpServers": {
+            "ai-music-player": {
+                "command": python_path,
+                "args": [script_path],
+                "env": env_config
+            }
+        }
+    }
+
+    # 如果 env 为空，移除 env 字段
+    if not env_config:
+        del config["mcpServers"]["ai-music-player"]["env"]
+
+    return config
 
 
 def main():
@@ -302,7 +175,7 @@ def main():
         response = input("是否创建虚拟环境? [Y/n]: ").strip().lower()
 
         if response == "n":
-            print_info("将使用系统 Python 安装依赖")
+            print_info("将使用系统 Python")
             python_path = sys.executable
             use_venv = False
         else:
@@ -346,47 +219,51 @@ def main():
     # 获取环境变量配置
     env_config = get_env_config()
     if env_config:
-        print_info(f"从 .env 加载了 {len(env_config)} 个配置项")
+        print_info(f"已加载 {len(env_config)} 个配置项")
 
-    print(f"\n使用的 Python: {python_path}")
-    print(f"脚本路径: {script_path}")
+    # 生成配置
+    config = generate_mcp_config(python_path, script_path, env_config)
 
-    # 选择要配置的客户端
-    print("\n" + "-" * 40)
-    print("请选择要配置的 MCP 客户端:")
-    print("-" * 40)
-    print("  1. Claude Desktop")
-    print("  2. Cherry Studio")
-    print("  3. 生成 mcp_config.json (通用)")
-    print("  4. 全部配置")
-    print("-" * 40)
-
-    choice = input("\n请输入选项 (1-4): ").strip()
-
-    if choice == "1":
-        configure_claude_desktop(python_path, script_path, env_config)
-    elif choice == "2":
-        configure_cherry_studio(python_path, script_path, env_config)
-    elif choice == "3":
-        generate_mcp_json(python_path, script_path, env_config)
-    elif choice == "4":
-        configure_claude_desktop(python_path, script_path, env_config)
-        configure_cherry_studio(python_path, script_path, env_config)
-        generate_mcp_json(python_path, script_path, env_config)
-    else:
-        print_error("无效选项")
-        return
+    # 保存到文件
+    config_file = script_dir / "mcp_config.json"
+    with open(config_file, "w") as f:
+        json.dump(config, f, indent=2, ensure_ascii=False)
 
     print("\n" + "=" * 60)
-    print_success("安装完成!")
+    print_success("MCP 配置已生成!")
     print("=" * 60)
-    print("\n下一步:")
-    print("  1. 重启 MCP 客户端 (Cherry Studio / Claude Desktop)")
-    print("  2. 开始使用 AI 音乐播放器")
-    print("\n使用示例:")
-    print("  - '播放周杰伦的歌'")
-    print("  - '暂停'")
-    print("  - '列出所有歌手'")
+
+    print(f"\n配置文件: \"{config_file}\"")
+    print(f"\n{'='*60}")
+    print("MCP 配置内容 (复制到你的 MCP 客户端):")
+    print("=" * 60)
+    print(json.dumps(config, indent=2, ensure_ascii=False))
+    print("=" * 60)
+
+    print("\n" + "-" * 60)
+    print("使用说明:")
+    print("-" * 60)
+    print("1. 复制上方 JSON 配置")
+    print("2. 打开 MCP 客户端设置")
+    print("3. 添加 MCP 服务器，粘贴配置")
+    print("-" * 60)
+
+    print("\nCherry Studio:")
+    print("  设置 → MCP 服务器 → 添加 → 粘贴 JSON")
+
+    print("\nClaude Desktop:")
+    print("  打开 ~/.config/Claude/claude_desktop_config.json")
+    print("  在 mcpServers 中添加配置")
+
+    print("\n" + "=" * 60)
+    print("配置参数说明:")
+    print("=" * 60)
+    print(f"  Python: \"{python_path}\"")
+    print(f"  脚本: \"{script_path}\"")
+    if env_config:
+        for k, v in env_config.items():
+            print(f"  {k}: \"{v}\"")
+    print("=" * 60)
 
 
 if __name__ == "__main__":
