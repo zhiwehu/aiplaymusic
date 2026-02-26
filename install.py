@@ -129,24 +129,24 @@ def get_env_config():
 def generate_mcp_config(python_path: str, script_path: str, env_config: dict, use_uvx: bool = False) -> dict:
     """生成 MCP 配置 (Cherry Studio 格式)"""
     if use_uvx:
-        # 使用 uvx 方式
+        # 使用 uvx 方式 - uvx 直接运行包
         server_config = {
             "command": "uvx",
             "args": [
                 "--from",
                 "git+https://github.com/zhiwehu/aiplaymusic",
+                "--python",
+                "python3",
                 "ai-music-player"
             ],
-            "env": env_config,
-            "enabled": True
+            "env": env_config
         }
     else:
         # 使用 Python 脚本方式
         server_config = {
             "command": python_path,
             "args": [script_path],
-            "env": env_config,
-            "enabled": True
+            "env": env_config
         }
 
     # 如果 env 为空，移除 env 字段
