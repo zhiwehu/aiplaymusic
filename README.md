@@ -59,14 +59,15 @@ pip install -e .
       "args": [
         "--from",
         "git+https://github.com/zhiwehu/aiplaymusic",
+        "--python",
+        "python3",
         "ai-music-player"
       ],
       "env": {
         "MUSIC_DIR": "/path/to/your/music",
         "DATABASE_PATH": "music.db",
         "DEFAULT_VOLUME": "0.7"
-      },
-      "enabled": true
+      }
     }
   }
 }
@@ -98,7 +99,13 @@ pip install -e .
   "mcpServers": {
     "ai-music-player": {
       "command": "uvx",
-      "args": ["--from", "git+https://github.com/zhiwehu/aiplaymusic", "ai-music-player"],
+      "args": [
+        "--from",
+        "git+https://github.com/zhiwehu/aiplaymusic",
+        "--python",
+        "python3",
+        "ai-music-player"
+      ],
       "env": {
         "MUSIC_DIR": "/path/to/your/music"
       }
