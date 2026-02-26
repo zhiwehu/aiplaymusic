@@ -1,14 +1,16 @@
 {
   "mcpServers": {
     "ai-music-player": {
-      "command": "python",
+      "command": "uvx",
       "args": [
-        "/path/to/aiplaymusic/mcp_server.py"
+        "--from",
+        "github.com/zhiwehu/aiplaymusic",
+        "ai-music-player"
       ],
       "env": {
-        "MUSIC_DIR": "/path/to/your/music",
+        "MUSIC_DIR": "/Users/huzhiwei/ai/aiplaymusic/music",
         "DATABASE_PATH": "music.db",
-        "DEFAULT_VOLUME": "0.7"
+        "DEFAULT_VOLUME": "0.1"
       }
     }
   }
