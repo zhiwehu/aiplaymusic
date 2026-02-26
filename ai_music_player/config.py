@@ -16,8 +16,16 @@ load_dotenv()
 
 # ==================== 项目路径配置 ====================
 
-# 项目根目录（当前文件所在目录）
-BASE_DIR = Path(__file__).parent
+# 项目根目录（config.py 在 ai_music_player 包中，需要取父目录的父目录）
+# 如果被安装为包，BASE_DIR 会在 site-packages 中
+_config_dir = Path(__file__).parent
+# 判断是开发模式还是已安装的包
+if (_config_dir.parent / "pyproject.toml").exists():
+    # 开发模式：项目根目录是 ai_music_player 的父目录
+    BASE_DIR = _config_dir.parent
+else:
+    # 已安装的包：使用当前目录
+    BASE_DIR = _config_dir
 
 # 音乐文件存放目录
 # 可通过环境变量 MUSIC_DIR 自定义，默认为项目根目录下的 music 文件夹
